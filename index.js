@@ -1,8 +1,11 @@
 /* eslint-disable linebreak-style */
 /* eslint-disable no-console */
 /* eslint-disable import/extensions */
-import { program } from 'commander/esm.mjs';
+import program from 'commander';
+import chalk from 'chalk';
+import clipboardy from 'clipboardy';
 import createPassword from './utils/createPassword.js';
+import savePassword from './utils/savePassword.js';
 
 program.version('1.0.0').description('Simple Password Generator');
 
@@ -21,6 +24,17 @@ const {
 
 const newPassword = createPassword(length, numbers, symbols);
 
+// optionally save new password to file
+
+if (save) {
+  savePassword(newPassword);
+}
+
+// copy new password to clipboard
+
+clipboardy.writeSync(newPassword);
+
 // output new password
 
-console.log(newPassword);
+console.log(chalk.blue('Generated Password: ') + chalk.bold(newPassword));
+console.log(chalk.yellowBright('Password copied to clipboard.'));
