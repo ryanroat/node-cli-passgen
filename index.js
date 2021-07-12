@@ -1,5 +1,8 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-console */
+/* eslint-disable import/extensions */
 import { program } from 'commander/esm.mjs';
+import createPassword from './utils/createPassword.js';
 
 program.version('1.0.0').description('Simple Password Generator');
 
@@ -10,4 +13,14 @@ program
   .option('-s, --save', 'save password to passwords.txt')
   .parse();
 
-console.log(program.opts());
+const {
+  length, save, numbers, symbols,
+} = program.opts();
+
+// get new password with options
+
+const newPassword = createPassword(length, numbers, symbols);
+
+// output new password
+
+console.log(newPassword);
